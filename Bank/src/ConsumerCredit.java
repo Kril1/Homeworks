@@ -6,7 +6,7 @@ public class ConsumerCredit extends Credit {
 	LocalDate date = LocalDate.now();
 	private static String name = "Consumer Credit";
 	
-	public static String getName() {
+	public String getName() {
 		return name;
 	}
 

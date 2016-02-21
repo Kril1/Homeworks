@@ -7,30 +7,68 @@ import java.time.Period;
 public class Client {
 
 	private static final int HALF_OF_SALARY = 2;
-	String name;
-	String address;
-	double mounthlySalary;
-	double totalMoney;
-	List<Deposit> deposits;
-	List<Credit> credits;
-	Bank myBank;
-	double AllMountlyPayments;
+	private String name;
+	private String address;
+	private double mounthlySalary;
+	private double totalMoney;
+	private List<Deposit> deposits;
+	private List<Credit> credits;
+	private Bank myBank;
+	private double AllMountlyPayments;
 
-	void makeDeposit(double money, String depositKind) {
-		if (depositKind.equals(ShortDeposit.getName())) {
+	Client(String name, String address, double mounthlySalary, double totoalMoney, Bank myBank) {		
+		this.setAddress(address);
+		this.setMounthlySalary(mounthlySalary);
+		this.setMyBank(myBank);
+		this.setName(name);
+		this.setTotalMoney(totoalMoney);
+	}
+
+	private void setName(String name) {
+		if (name != null && name.length() > 0) {
+			this.name = name;
+		}
+	}
+
+	private void setAddress(String address) {
+		if (name != address && address.length() > 0) {
+			this.address = address;
+		}
+	}
+
+	private void setMounthlySalary(double mounthlySalary) {
+		if (mounthlySalary > 0) {
+			this.mounthlySalary = mounthlySalary;
+		}
+	}
+
+	private void setTotalMoney(double totalMoney) {
+		if (totalMoney >= 0) {
+			this.totalMoney = totalMoney;
+		}
+	}
+
+	private void setMyBank(Bank myBank) {
+		if (myBank != null) {
+			this.myBank = myBank;
+		}
+	}
+
+	void makeDeposit(double money, Deposit depositKind) {
+		if (depositKind instanceof ShortDeposit) {
 			this.totalMoney -= money;
 			myBank.takingDeposit(money);
 			deposits.add(new ShortDeposit());
-		}	
-		if (depositKind.equals(LongDeposit.getName())) {
+		}
+		if (depositKind instanceof LongDeposit) {
 			this.totalMoney -= money;
 			myBank.takingDeposit(money);
 			deposits.add(new LongDeposit());
-		}		
+		}
 	}
 
-	void takeCredit(String typeOfCredit, double howMuchMoney, int howManyMounts) {
-		if (typeOfCredit.equals(HomeCredit.getName())) {
+	void takeCredit(iCredit typeOfCredit, double howMuchMoney, int howManyMounts) {
+		if (typeOfCredit instanceof HomeCredit) {
 			double mountlyPayment = myBank.giveHomeCredit(howMuchMoney, howManyMounts);
 			if (mountlyPayment > this.mounthlySalary / HALF_OF_SALARY) {
 				System.out.println("Can't get that credit");
@@ -41,7 +79,7 @@ public class Client {
 			}
 
 		}
-		if (typeOfCredit.equals(ConsumerCredit.getName())) {
+		if (typeOfCredit instanceof ConsumerCredit) {
 			double mountlyPayment = myBank.giveConsumerCredit(howMuchMoney, howManyMounts);
 			if (mountlyPayment > this.mounthlySalary / HALF_OF_SALARY) {
 				System.out.println("Can't get that credit");
@@ -55,9 +93,7 @@ public class Client {
 		}
 	}
 
-	void payingOffCredit(double moneyToInput) {		
-		this.totalMoney -= this.AllMountlyPayments;	
+	void payingOffCredit(double moneyToInput) {
+		this.totalMoney -= this.AllMountlyPayments;
 	}
-	
-	
 }

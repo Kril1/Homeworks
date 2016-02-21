@@ -17,10 +17,6 @@ public class Accounts {
 		}
 	}
 
-	public int getTimeInMounths() {
-		return timeInMounths;
-	}
-
 	public void setTimeInMounths(int timeInMounths) {
 		if (timeInMounths > 1 && timeInMounths < 60) {
 			this.timeInMounths = timeInMounths;
