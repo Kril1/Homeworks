@@ -10,7 +10,7 @@ public class Bank {
 	private double currentMoney;
 	private double reserve;
 	private List<Client> clientAccounts;
-	private iCredit credit;
+	private Credit credit;
 	
 	Bank (String name, String address, double currentMoney){
 		
@@ -65,6 +65,14 @@ public class Bank {
 			System.out.println("The bank can't give this credit!");
 		}
 		return -1;
+	}
+
+	public double getCurrentMoney() {
+		return currentMoney;
+	}
+
+	public double getReserve() {
+		return reserve;
 	}
 	
 }

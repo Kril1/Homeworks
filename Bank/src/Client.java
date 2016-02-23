@@ -16,12 +16,14 @@ public class Client {
 	private Bank myBank;
 	private double AllMountlyPayments;
 
-	Client(String name, String address, double mounthlySalary, double totoalMoney, Bank myBank) {		
+	Client(String name, String address, double mounthlySalary, double totoalMoney, Bank myBank, List<Deposit> deposits,List<Credit> credits) {		
 		this.setAddress(address);
 		this.setMounthlySalary(mounthlySalary);
 		this.setMyBank(myBank);
 		this.setName(name);
 		this.setTotalMoney(totoalMoney);
+		this.deposits = deposits;
+		this.credits = credits;
 	}
 
 	private void setName(String name) {
@@ -56,18 +58,21 @@ public class Client {
 
 	void makeDeposit(double money, Deposit depositKind) {
 		if (depositKind instanceof ShortDeposit) {
+			deposits.add(depositKind);
 			this.totalMoney -= money;
 			myBank.takingDeposit(money);
 			deposits.add(new ShortDeposit());
+			
 		}
 		if (depositKind instanceof LongDeposit) {
+			deposits.add(depositKind);
 			this.totalMoney -= money;
 			myBank.takingDeposit(money);
 			deposits.add(new LongDeposit());
 		}
 	}
 
-	void takeCredit(iCredit typeOfCredit, double howMuchMoney, int howManyMounts) {
+	void takeCredit(Credit typeOfCredit, double howMuchMoney, int howManyMounts) {
 		if (typeOfCredit instanceof HomeCredit) {
 			double mountlyPayment = myBank.giveHomeCredit(howMuchMoney, howManyMounts);
 			if (mountlyPayment > this.mounthlySalary / HALF_OF_SALARY) {
@@ -92,8 +97,33 @@ public class Client {
 			System.out.println("Enter a valid type of credit - Home Credit, or Consymer Credit!");
 		}
 	}
-
+	
 	void payingOffCredit(double moneyToInput) {
 		this.totalMoney -= this.AllMountlyPayments;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public double getMounthlySalary() {
+		return mounthlySalary;
+	}
+
+	public double getTotalMoney() {
+		return totalMoney;
+	}
+
+	public Bank getMyBank() {
+		return myBank;
+	}
+	
+	public List<Deposit> getDeposits() {
+		return deposits;
+	}
+
 }
